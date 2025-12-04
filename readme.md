@@ -178,3 +178,4 @@ Pour tester manuellement la remontée d'une erreur critique :
 3. Lancez la commande :
    ```bash
    python epicevents.py crash
+4. Vérifiez le dashboard Sentry pour voir l'alerte ZeroDivisionError.
