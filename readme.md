@@ -2,14 +2,14 @@
 
 Application CRM sécurisée en ligne de commande (CLI) pour la gestion des clients, contrats et événements d'Epic Events.
 
-## 📋 Description
+## Description
 
 Ce projet permet de gérer le processus commercial complet d'une entreprise d'événementiel via une interface terminal sécurisée. Il respecte une architecture stricte de séparation des pouvoirs entre les départements :
 * **Gestion (Management) :** Gère les collaborateurs et les contrats.
 * **Commercial :** Gère les clients et crée les événements.
 * **Support :** Gère le déroulement des événements.
 
-## 🛠 Technologies
+## Technologies
 
 * **Langage :** Python 3.9+
 * **Base de données :** PostgreSQL
@@ -17,11 +17,11 @@ Ce projet permet de gérer le processus commercial complet d'une entreprise d'é
 * **Interface :** Click & Rich
 * **Sécurité :** Argon2 (Hashage), JWT (Tokens), Gestion des permissions par rôle.
 
-## 🚀 Installation
+## Installation
 
 1.  **Cloner le projet :**
     ```bash
-    git clone [https://github.com/VOTRE_USERNAME/epicevents.git](https://github.com/VOTRE_USERNAME/epicevents.git)
+    git clone [https://github.com/steveraffner/epicevents.git](https://github.com/steveraffner/epicevents.git)
     cd epicevents
     ```
 
@@ -71,11 +71,11 @@ Ce projet permet de gérer le processus commercial complet d'une entreprise d'é
 
 ---
 
-## 📖 Guide des Commandes
+## Guide des Commandes
 
 Toutes les commandes s'exécutent via `python epicevents.py`.
 
-### 🔐 Authentification
+### Authentification
 * **Se connecter :**
     ```bash
     python epicevents.py login
@@ -89,7 +89,7 @@ Toutes les commandes s'exécutent via `python epicevents.py`.
     python epicevents.py logout
     ```
 
-### 👥 Gestion des Collaborateurs (Users)
+### Gestion des Collaborateurs (Users)
 *Réservé au département GESTION.*
 
 * **Lister les collaborateurs :**
@@ -110,7 +110,7 @@ Toutes les commandes s'exécutent via `python epicevents.py`.
     python epicevents.py users delete [USER_ID]
     ```
 
-### 💼 Gestion des Clients
+### Gestion des Clients
 *Création réservée aux COMMERCIAUX. Lecture pour tous.*
 
 * **Lister les clients :**
@@ -126,7 +126,7 @@ Toutes les commandes s'exécutent via `python epicevents.py`.
     python epicevents.py clients update [CLIENT_ID] --phone "0600000000"
     ```
 
-### 📝 Gestion des Contrats
+### Gestion des Contrats
 *Création réservée à la GESTION.*
 
 * **Lister les contrats :**
@@ -145,7 +145,7 @@ Toutes les commandes s'exécutent via `python epicevents.py`.
     python epicevents.py contracts update [CONTRACT_ID] --signed --amount 5000
     ```
 
-### 🎉 Gestion des Événements
+### Gestion des Événements
 *Création réservée aux COMMERCIAUX (si contrat signé).*
 
 * **Lister les événements :**
