@@ -1,0 +1,8 @@
+sqlalchemy
+psycopg2-binary
+python-dotenv
+click
+rich
+sentry-sdk
+argon2-cffi
+pyjwt
