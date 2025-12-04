@@ -168,3 +168,13 @@ Toutes les commandes s'exécutent via `python epicevents.py`.
         ```bash
         python epicevents.py events update [EVENT_ID] --notes "Traiteur OK"
         ```
+### Test & Monitoring (Sentry)
+
+L'application est connectée à Sentry pour le suivi des erreurs.
+
+Pour tester manuellement la remontée d'une erreur critique :
+1. Ouvrez le fichier `epicevents.py`.
+2. Décommentez les lignes de la commande `crash` (supprimez les `#`).
+3. Lancez la commande :
+   ```bash
+   python epicevents.py crash
