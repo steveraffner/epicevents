@@ -1,5 +1,7 @@
 # Epic Events CRM
 
+**Projet réalisé par Steve Raffner dans le cadre de la formation Python OpenClassrooms**
+
 Application CRM sécurisée en ligne de commande (CLI) pour la gestion des clients, contrats et événements d'Epic Events.
 
 ## Description
