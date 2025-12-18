@@ -6,3 +6,5 @@ rich
 sentry-sdk
 argon2-cffi
 pyjwt
+pytest
+pytest-cov

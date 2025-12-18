@@ -179,3 +179,126 @@ Pour tester manuellement la remontée d'une erreur critique :
    ```bash
    python epicevents.py crash
 4. Vérifiez le dashboard Sentry pour voir l'alerte ZeroDivisionError.
+
+---
+
+## Sécurité
+
+### Mesures de Sécurité Implémentées
+
+Epic Events CRM intègre plusieurs niveaux de sécurité pour protéger les données et prévenir les attaques :
+
+#### 1. **Hashage des mots de passe (Argon2)**
+- Les mots de passe ne sont **jamais stockés en clair** dans la base de données
+- Utilisation d'**Argon2**, l'algorithme de hashage recommandé (winner du Password Hashing Competition)
+- Chaque mot de passe est hashé avec un **salt unique** automatique
+- Protection contre les attaques par force brute et rainbow tables
+
+#### 2. **Authentification JWT (JSON Web Tokens)**
+- Système de tokens sécurisés pour l'authentification
+- Tokens signés cryptographiquement avec une clé secrète
+- Durée de validité limitée (24h par défaut)
+- Validation automatique de l'expiration et de la signature
+
+#### 3. **Sanitisation des Inputs**
+Le module `sanitizer.py` protège contre plusieurs types d'attaques :
+- **Injections SQL** : Suppression/échappement des caractères dangereux (`, `, `--`, etc.)
+- **Attaques XSS** : Échappement des balises HTML (`<script>`, `<img>`, etc.)
+- **Validation stricte** : Format email, téléphone, username, montants
+- **Limitation de longueur** : Prévention des attaques par buffer overflow
+
+#### 4. **Contrôle d'accès par rôle (RBAC)**
+- Séparation stricte des permissions par département :
+  - **Management** : Gestion des utilisateurs et contrats
+  - **Commercial** : Gestion des clients et événements
+  - **Support** : Gestion des événements assignés
+- Vérification des permissions à chaque opération
+- Isolation des données (un commercial ne peut modifier que ses clients)
+
+#### 5. **Protection de la base de données**
+- Utilisation d'un **ORM (SQLAlchemy)** pour éviter les injections SQL
+- Requêtes paramétrées automatiques
+- Validation des entrées avant insertion en base
+
+### Schéma de la Base de Données
+
+Consultez le fichier [database_schema.md](database_schema.md) pour visualiser :
+- Le diagramme Mermaid complet de la base de données
+- Les relations entre les tables
+- Les contraintes et règles de gestion
+
+### Tests de Sécurité
+
+Le projet inclut une suite complète de tests de sécurité avec pytest :
+
+```bash
+# Installer pytest si nécessaire
+pip install pytest
+
+# Lancer tous les tests de sécurité
+pytest test_security.py -v
+
+# Lancer uniquement les tests de hashage
+pytest test_security.py::TestPasswordHashing -v
+
+# Lancer uniquement les tests JWT
+pytest test_security.py::TestJWTTokens -v
+
+# Lancer uniquement les tests de sanitisation
+pytest test_security.py::TestInputSanitization -v
+```
+
+Les tests couvrent :
+- ✅ Hashage Argon2 et vérification des mots de passe
+- ✅ Création, validation et expiration des tokens JWT
+- ✅ Sanitisation et validation des inputs
+- ✅ Protection contre les injections SQL
+- ✅ Protection contre les attaques XSS
+- ✅ Validation des emails, usernames, montants
+- ✅ Workflows complets d'authentification
+
+### Configuration Sécurisée
+
+1. **Fichier .env.example** : Un template de configuration est fourni
+   ```bash
+   # Créer votre fichier .env à partir du template
+   cp .env.example .env
+   ```
+
+2. **Générer une SECRET_KEY forte** :
+   ```bash
+   python -c "import secrets; print(secrets.token_urlsafe(64))"
+   ```
+
+3. **Le fichier .env ne doit JAMAIS être commité** (il est dans `.gitignore`)
+
+### Bonnes Pratiques
+
+- ✅ Mots de passe hashés avec Argon2 (jamais en clair)
+- ✅ Tokens JWT avec expiration (24h)
+- ✅ Validation et sanitisation de tous les inputs utilisateur
+- ✅ Contrôle d'accès basé sur les rôles (RBAC)
+- ✅ ORM pour éviter les injections SQL
+- ✅ Monitoring avec Sentry pour détecter les anomalies
+- ✅ Tests automatisés de sécurité
+- ✅ Template .env pour éviter l'exposition de secrets
+
+---
+
+## Tests
+
+### Lancer les Tests
+
+```bash
+# Installation de pytest
+pip install pytest
+
+# Tous les tests
+pytest -v
+
+# Tests de sécurité uniquement
+pytest test_security.py -v
+
+# Tests avec rapport de couverture (si pytest-cov installé)
+pytest --cov=. --cov-report=html
+```
